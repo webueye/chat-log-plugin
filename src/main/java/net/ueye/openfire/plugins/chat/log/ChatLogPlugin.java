@@ -9,6 +9,7 @@ import net.ueye.openfire.plugins.chat.log.dao.ChatLogDao;
 import net.ueye.openfire.plugins.chat.log.dao.ChatLogDaoImpl;
 import net.ueye.openfire.plugins.chat.log.entity.ChatLog;
 
+import org.apache.commons.lang.StringUtils;
 import org.jivesoftware.openfire.container.Plugin;
 import org.jivesoftware.openfire.container.PluginManager;
 import org.jivesoftware.openfire.interceptor.InterceptorManager;
@@ -73,8 +74,10 @@ public class ChatLogPlugin implements PacketInterceptor, Plugin {
 				List<?> messages = message.getElement().elements("x");
 				if (messages != null && !messages.isEmpty()) {
 					ChatLog chatLog = this.get(copyPacket, incoming, session);
-					chatLogDao.save(chatLog);
-					logger.debug("Save chatLog[{}]", chatLog);
+					if (StringUtils.isNotEmpty(chatLog.getSender()) && StringUtils.isNotEmpty(chatLog.getReceiver())) {
+						chatLogDao.save(chatLog);
+						logger.debug("Save chatLog[{}]", chatLog);
+					}
 				}
 			}
 
