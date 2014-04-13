@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+    <class>net.ueye.openfire.plugins.chat.log.ChatLogPlugin</class>
+
+    <name>ChatLog Service</name>
+    <description>This is the user chat message log plugins.</description>
+    <author>rubys</author>
+
+    <version>1.0</version>
+    <date>12/04/2014</date>
+    <url>http://localhost:9090/openfire/plugins.jsp</url>
+    <minServerVersion>3.9.1</minServerVersion>
+    <licenseType>gpl</licenseType>
+
+    <adminconsole>		
+    	<tab id="chat-log-tab" name="ChagLog" url="chat-log" description="Click to manage ChatLog.">
+        	<sidebar id="chat-log-sidebar" name="Chat Log Manager">
+				<item id="chat-log-service" name="Chat Log Service" url="chat-log" description="Click to memu can query the users chat logs" />
+           	</sidebar>
+        </tab>
+    </adminconsole>
+</plugin>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+
+	<servlet>
+		<servlet-name>ChatLogServlet</servlet-name>
+		<servlet-class>net.ueye.openfire.plugins.chat.log.web.ChatLogServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ChatLogServlet</servlet-name>
+		<url-pattern>/chat-log</url-pattern>
+	</servlet-mapping>
+
+</web-app>
