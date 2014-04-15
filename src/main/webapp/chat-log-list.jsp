@@ -27,6 +27,7 @@
 		        <table cellpadding="0" cellspacing="0" border="0" width="100%">
 		        <thead>
 		            <tr>
+		                <th>ID</th>
 		                <th>Sender</th>
 		                <th>Receiver</th>
 		                <th>Content</th>
@@ -37,6 +38,7 @@
 		        <tbody>
 		            <c:forEach var="chatLog" items="${page.dateList}">
 			            <tr class="jive-even">
+			                <td>${chatLog.id}</td>
 			                <td>${chatLog.sender}</td>
 			                <td>${chatLog.receiver}</td>
 			                <td>${chatLog.content}</td>
@@ -95,16 +97,16 @@
         </form>
 	    
 	    <script type="text/javascript">
-	    function paginationHandle(pageNum, pageSize){
-	    	if(!isNaN(pageNum)){
-				document.getElementById("pageNum").value = pageNum;
-			}
-			if(!isNaN(pageSize)){
-				document.getElementById("pageSize").value = pageSize;
-			}
-			document.getElementById("submitForm").submit();
-			
-	    }
+		    function paginationHandle(pageNum, pageSize){
+		    	if(!isNaN(pageNum)){
+					document.getElementById("pageNum").value = pageNum;
+				}
+				if(!isNaN(pageSize)){
+					document.getElementById("pageSize").value = pageSize;
+				}
+				document.getElementById("submitForm").submit();
+				return false;
+		    }
 	    </script>
 	    
   	</body>

@@ -58,12 +58,12 @@ public class ChatLogPlugin implements PacketInterceptor, Plugin {
 			Message message = (Message) copyPacket;
 
 			if (message.getType() == Message.Type.chat || message.getType() == Message.Type.groupchat) {
-				if (processed || !incoming) {
-					return;
-				}
-				if (session == null) {
-					return;
-				}
+//				if (session == null) {
+//					return;
+//				}
+				// if (!processed) {
+				// return;
+				// }
 				ChatLog chatLog = this.get(copyPacket, incoming, session);
 				chatLogDao.save(chatLog);
 				logger.debug("Save chatLog[{}]", chatLog);
@@ -75,16 +75,18 @@ public class ChatLogPlugin implements PacketInterceptor, Plugin {
 		Message message = (Message) packet;
 		ChatLog chatLog = new ChatLog();
 
-		JID jid = session.getAddress();
-		chatLog.setSender(jid.getNode());
-		JID recipient = message.getTo();
-		chatLog.setReceiver(recipient.getNode());
+		if (session != null) {
+			JID jid = session.getAddress();
+			chatLog.setSessionJID(jid.toString());
+		}
+
+		chatLog.setSender(message.getFrom().getNode());
+		chatLog.setReceiver(message.getTo().getNode());
 		chatLog.setContent(message.getBody());
 		chatLog.setCreateDate(new Timestamp(new Date().getTime()));
 		chatLog.setDetail(message.toXML());
 		chatLog.setLength(chatLog.getContent().length());
 		chatLog.setState(0);
-		chatLog.setSessionJID(jid.toString());
 
 		return chatLog;
 	}

@@ -166,7 +166,7 @@ public class ChatLogDaoImpl implements ChatLogDao {
 			page.setTotalCount(count(chatLog));
 
 			sqlBuilder.append(" order by ").append(page.getOrderBy()).append(" ").append(page.getOrder());
-			sqlBuilder.append(" limit ").append(page.getBeginIndex()).append(", ").append(page.getEndIndex());
+			sqlBuilder.append(" limit ").append(page.getBeginIndex()).append(", ").append(page.getPageSize());
 
 			logger.debug("ChatLog query[{}]", sqlBuilder.toString());
 
@@ -189,11 +189,18 @@ public class ChatLogDaoImpl implements ChatLogDao {
 	private StringBuilder buildCondition(ChatLog chatLog, String sql) {
 		StringBuilder sqlBuilder = new StringBuilder(sql);
 		if (chatLog != null) {
-			if (StringUtils.isNotEmpty(chatLog.getSender())) {
+			if (StringUtils.isNotEmpty(chatLog.getSender()) && StringUtils.isNotEmpty(chatLog.getReceiver())) {
 				sqlBuilder.append(" and sender ='").append(chatLog.getSender()).append("'");
-			}
-			if (StringUtils.isNotEmpty(chatLog.getReceiver())) {
-				sqlBuilder.append(" and receiver ='").append(chatLog.getSender()).append("'");
+				sqlBuilder.append(" and receiver ='").append(chatLog.getReceiver()).append("'");
+			} else {
+				if (StringUtils.isNotEmpty(chatLog.getSender())) {
+					sqlBuilder.append(" and (sender ='").append(chatLog.getSender()).append("'");
+					sqlBuilder.append(" or receiver ='").append(chatLog.getSender()).append("')");
+				}
+				if (StringUtils.isNotEmpty(chatLog.getReceiver())) {
+					sqlBuilder.append(" and (sender ='").append(chatLog.getReceiver()).append("'");
+					sqlBuilder.append(" or receiver ='").append(chatLog.getReceiver()).append("')");
+				}
 			}
 			if (StringUtils.isNotBlank(chatLog.getContent())) {
 				sqlBuilder.append(" and receiver like '%").append(chatLog.getContent()).append("%'");
